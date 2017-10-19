@@ -34,21 +34,23 @@
 
 function [transit_time, OC, TTV_period, TTV_offset,TTV_amplitude,TTV_fase,TTV_fit, percent_thd, correl]=TTTV_single()
 clc;
+close all;
 
-a=100;
+a=5.2;
 J1=10;
 fi=pi/2;
+fi=20*pi/180;
 fi_obs=pi/2;
 lambda10=-pi/2;
 ohm10=0;
 g2=0;
-m0=2.05;
-m1=6.6;
-m2=0.01;
-z= 20*pi/180;
-period= 1.7633587;
-t_min=10;
-t_max=300*period;
+m0=1;
+m1=1;
+m2=0.0035;
+z= 1*pi/180;
+period= 400;
+t_min=1;
+t_max=200*period;
 NS_factor = 10;
 OC_precision = 10;
 
@@ -67,12 +69,16 @@ subplot(3,1,1);
 plot(time, Y1p)
 hold on;
 plot(time, Y1,'r')
+xlabel('Time [Days]')
+ylabel('Distance from Oxyz [AU]')
 legend('Y1p','Y1')
 
 subplot(3,1,2);
-plot(time, Z1p, time, Z1)
+plot(time, Z1p)
 hold on;
 plot(time, Z1,'r')
+xlabel('Time [Days]')
+ylabel('Distance from Oxyz [AU]')
 legend('Z1p','Z1')
 
 subplot(3,1,3)

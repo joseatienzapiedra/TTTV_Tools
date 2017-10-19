@@ -59,25 +59,26 @@ period= 400;
 
 fi=pi/2;
 
-t_min=1;
-t_max=80000;
+t_min=10;
+t_max=200*period;
 NS_factor = 10;
 OC_precision = 10;
 m0=m0*1047.56; 
 
-sweep_parameter(1)=0;       %Sweep Parameter min value
-sweep_step=0.05;              %Sweep Parameter step
-sweep_max=1;                  %Sweep Parameter max value
+sweep_parameter(1)=0.0;       %Sweep Parameter min value
+sweep_step=5;              %Sweep Parameter step
+sweep_max=359;                  %Sweep Parameter max value
 
 %Sweep Parameter label
-sweep_parameter_label='Trojan Mass [Jupiter masses]';   
+
+%sweep_parameter_label='Trojan Mass [Jupiter masses]';   
 %sweep_parameter_label='Planet Mass [Jupiter masses]'; 
 %sweep_parameter_label='Star Mass [Sun masses]'; 
 %sweep_parameter_label='z [º]'; 
 %sweep_parameter_label='J1, Inclination [º]'; %?????
 %sweep_parameter_label='Period [Days]'; 
 %sweep_parameter_label='Ohm10 [º]'; 
-%sweep_parameter_label='Fi [º]'; 
+sweep_parameter_label='Fi [º]'; 
 %sweep_parameter_label='Fi_obs [º]'; 
 %sweep_parameter_label='a [AU]'; 
 
@@ -88,14 +89,14 @@ tic;
         sweep_parameter(i)=sweep_parameter(i-1)+sweep_step;
     end
 
-m2=sweep_parameter(i);     %IMPORTANT! Define Sweep Parameter!
+fi=sweep_parameter(i);     %IMPORTANT! Define Sweep Parameter!
 
-%t_max=period*200;        %ONLY if t_max=sweep_parameter(i);
+%t_max=period*200;        %ONLY if period=sweep_parameter(i);
 %m0=m0*1047.56;            %ONLY if m0=sweep_parameter(i);
 %J1= J1*pi/180;              %ONLY if J1=sweep_parameter(i);
 %z= z*pi/180;              %ONLY if z=sweep_parameter(i);
 %ohm10= ohm10*pi/180;      %ONLY if ohm10=sweep_parameter(i);
-%fi= fi*pi/180;            %ONLY if fi=sweep_parameter(i);
+fi= fi*pi/180;            %ONLY if fi=sweep_parameter(i);
 %fi_obs= fi_obs*pi/180;    %ONLY if fi=sweep_parameter(i);
 
 
@@ -138,16 +139,9 @@ i=i+1;
 end
 
 figure (1)
-title('Fundamental')
-subplot(2,2,1)
-plot(sweep_parameter, TTV_period(:,1))
-hold on
-plot(sweep_parameter, TTV_period(:,1),'ro')
-ylabel('TTV period [Days]')
-xlabel(sweep_parameter_label)
-xlim([sweep_parameter(1) sweep_max])
+suptitle('Fundamental')
 
-subplot(2,2,2)
+subplot(2,2,1)
 plot(sweep_parameter, TTV_offset(:,1))
 hold on
 plot(sweep_parameter, TTV_offset(:,1),'ro')
@@ -155,8 +149,21 @@ ylabel('TTV offset [Minutes]')
 xlabel(sweep_parameter_label)
 xlim([sweep_parameter(1) sweep_max])
 
+subplot(2,2,2)
+[AX,~,H2]=plotyy(sweep_parameter, TTV_period(:,1),sweep_parameter, TTV_period(:,1)/period);
+xlim([sweep_parameter(1) sweep_max])
+xlim(AX(2), [sweep_parameter(1) sweep_max])
+set(AX,{'ycolor'},{'black';'black'})
+set(H2,'Color','b')
+hold on
+plot(sweep_parameter, TTV_period(:,1),'ro')
+ylabel('TTV period [Days]')
+ylabel(AX(2), 'Times orbital period');
+xlabel(sweep_parameter_label)
+
+
 subplot(2,2,3)
-plot(sweep_parameter, TTV_amplitude(:,1))
+plot(sweep_parameter,TTV_amplitude(:,1));
 hold on
 plot(sweep_parameter, TTV_amplitude(:,1),'ro')
 ylabel('TTV amplitude [Minutes]')
@@ -173,16 +180,8 @@ xlim([sweep_parameter(1) sweep_max])
 
 
 figure (2)
-title('Second Harmonic')
+suptitle('Second Harmonic')
 subplot(2,2,1)
-plot(sweep_parameter, TTV_period(:,2))
-hold on
-plot(sweep_parameter, TTV_period(:,2),'ro')
-ylabel('TTV period [Days]')
-xlabel(sweep_parameter_label)
-xlim([sweep_parameter(1) sweep_max])
-
-subplot(2,2,2)
 plot(sweep_parameter, TTV_offset(:,2))
 hold on
 plot(sweep_parameter, TTV_offset(:,2),'ro')
@@ -190,8 +189,16 @@ ylabel('TTV offset [Minutes]')
 xlabel(sweep_parameter_label)
 xlim([sweep_parameter(1) sweep_max])
 
+subplot(2,2,2)
+plot(sweep_parameter, TTV_period(:,2));
+hold on
+plot(sweep_parameter, TTV_period(:,2),'ro')
+ylabel('TTV period [Days]')
+xlabel(sweep_parameter_label)
+xlim([sweep_parameter(1) sweep_max])
+
 subplot(2,2,3)
-plot(sweep_parameter, TTV_amplitude(:,2))
+plot(sweep_parameter,TTV_amplitude(:,2));
 hold on
 plot(sweep_parameter, TTV_amplitude(:,2),'ro')
 ylabel('TTV amplitude [Minutes]')

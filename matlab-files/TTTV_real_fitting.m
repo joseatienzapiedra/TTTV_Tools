@@ -19,11 +19,13 @@ function [ TTV_period, TTV_offset,TTV_amplitude,TTV_fase,TTV_fit, correl] = TTTV
 
 disp('FUNDAMENTAL FITTING')
 disp('-------------------')
-[TTV_period(1), TTV_offset(1),TTV_amplitude(1),TTV_fase(1),TTV_fit(1,:)]=TTTV_sinusoildal_fitting (transit_time, OC);
+[TTV_period(1), TTV_offset(1),TTV_amplitude(1),TTV_fase(1),TTV_fit(1,:)]=TTTV_sinusoildal_fitting (transit_time, OC,OC*0, 1);
 
 disp('HARMONIC FITTING')
 disp('----------------')
-[TTV_period(2), TTV_offset(2),TTV_amplitude(2),TTV_fase(2),TTV_fit(2,:)]=TTTV_sinusoildal_fitting (transit_time, OC-TTV_fit(1,:));
+[TTV_period(2), TTV_offset(2),TTV_amplitude(2),TTV_fase(2),TTV_fit(2,:)]=TTTV_sinusoildal_fitting (transit_time, OC, TTV_fit(1,:), 2);
+
+%TTV_fit(2,:)=TTV_fit(2,:)*0;
 
 corr_matrix=corrcoef(sum(TTV_fit),OC);
 correl=corr_matrix(2);
