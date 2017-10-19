@@ -39,7 +39,6 @@ close all;
 a=5.2;
 J1=10;
 fi=pi/2;
-fi=20*pi/180;
 fi_obs=pi/2;
 lambda10=-pi/2;
 ohm10=0;

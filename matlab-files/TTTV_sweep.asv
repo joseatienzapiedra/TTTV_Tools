@@ -54,29 +54,29 @@ fi_obs=pi/2;
 m0=1;
 m1=1;
 m2=0.0035;
-z= 10*pi/180;
+z= 20*pi/180;
 period= 400;
 
 fi=pi/2;
 
-t_min=1;
+t_min=10;
 t_max=200*period;
 NS_factor = 10;
 OC_precision = 10;
 m0=m0*1047.56; 
 
-sweep_parameter(1)=0;       %Sweep Parameter min value
-sweep_step=1;              %Sweep Parameter step
-sweep_max=359;                  %Sweep Parameter max value
+sweep_parameter(1)=0.05;       %Sweep Parameter min value
+sweep_step=0.05;              %Sweep Parameter step
+sweep_max=1;                  %Sweep Parameter max value
 
 %Sweep Parameter label
 
-%sweep_parameter_label='Trojan Mass [Jupiter masses]';   
+sweep_parameter_label='Trojan Mass [Jupiter masses]';   
 %sweep_parameter_label='Planet Mass [Jupiter masses]'; 
 %sweep_parameter_label='Star Mass [Sun masses]'; 
 %sweep_parameter_label='z [º]'; 
-sweep_parameter_label='J1, Inclination [º]'; %?????
-%sweep_parameter_label='Orbital Period [Days]'; 
+%sweep_parameter_label='J1, Inclination [º]'; %?????
+%sweep_parameter_label='Period [Days]'; 
 %sweep_parameter_label='Ohm10 [º]'; 
 %sweep_parameter_label='Fi [º]'; 
 %sweep_parameter_label='Fi_obs [º]'; 
@@ -89,11 +89,11 @@ tic;
         sweep_parameter(i)=sweep_parameter(i-1)+sweep_step;
     end
 
-J1=sweep_parameter(i);     %IMPORTANT! Define Sweep Parameter!
+m2=sweep_parameter(i);     %IMPORTANT! Define Sweep Parameter!
 
 %t_max=period*200;        %ONLY if period=sweep_parameter(i);
 %m0=m0*1047.56;            %ONLY if m0=sweep_parameter(i);
-J1= J1*pi/180;              %ONLY if J1=sweep_parameter(i);
+%J1= J1*pi/180;              %ONLY if J1=sweep_parameter(i);
 %z= z*pi/180;              %ONLY if z=sweep_parameter(i);
 %ohm10= ohm10*pi/180;      %ONLY if ohm10=sweep_parameter(i);
 %fi= fi*pi/180;            %ONLY if fi=sweep_parameter(i);
