@@ -2,15 +2,15 @@
 %  * Copyright (c) 2017 Jose Atiemza Piedra - All rights reserved.
 %  * <www.joseatienza.com> <joseatienzapiedra@gmail.com>
 %  *
-%  * This file is part of TROY TTTV TOOLS 
+%  * This file is part of TTTV TOOLS 
 %  * And:  https://github.com/joseatienzapiedra/TTTV_Tools
 %  *
-%  * TROY TTTV TOOLS is free software: you can redistribute it and/or modify
+%  * TTTV TOOLS is free software: you can redistribute it and/or modify
 %  * it under the terms of the GNU General Public License as published by
 %  * the Free Software Foundation, either version 3 of the License, or
 %  * (at your option) any later version.
 %  *
-%  * TROY TTTV TOOLS is distributed in the hope that it will be useful,
+%  * TTTV TOOLS is distributed in the hope that it will be useful,
 %  * but WITHOUT ANY WARRANTY; without even the implied warranty of
 %  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 %  * GNU General Public License for more details. <http://www.gnu.org/licenses/>.
@@ -66,7 +66,7 @@ OC_precision = 10;
 m0=m0*1047.56; 
 
 sweep_parameter(1)=0;       %Sweep Parameter min value
-sweep_step=1;              %Sweep Parameter step
+sweep_step=5;              %Sweep Parameter step
 sweep_max=359;                  %Sweep Parameter max value
 
 %Sweep Parameter label
@@ -75,10 +75,10 @@ sweep_max=359;                  %Sweep Parameter max value
 %sweep_parameter_label='Planet Mass [Jupiter masses]'; 
 %sweep_parameter_label='Star Mass [Sun masses]'; 
 %sweep_parameter_label='z [º]'; 
-sweep_parameter_label='J1, Inclination [º]'; %?????
+%sweep_parameter_label='J1, Inclination [º]'; %?????
 %sweep_parameter_label='Orbital Period [Days]'; 
 %sweep_parameter_label='Ohm10 [º]'; 
-%sweep_parameter_label='Fi [º]'; 
+sweep_parameter_label='Fi [º]'; 
 %sweep_parameter_label='Fi_obs [º]'; 
 %sweep_parameter_label='a [AU]'; 
 
@@ -89,14 +89,14 @@ tic;
         sweep_parameter(i)=sweep_parameter(i-1)+sweep_step;
     end
 
-J1=sweep_parameter(i);     %IMPORTANT! Define Sweep Parameter!
+fi=sweep_parameter(i);     %IMPORTANT! Define Sweep Parameter!
 
 %t_max=period*200;        %ONLY if period=sweep_parameter(i);
 %m0=m0*1047.56;            %ONLY if m0=sweep_parameter(i);
-J1= J1*pi/180;              %ONLY if J1=sweep_parameter(i);
+%J1= J1*pi/180;              %ONLY if J1=sweep_parameter(i);
 %z= z*pi/180;              %ONLY if z=sweep_parameter(i);
 %ohm10= ohm10*pi/180;      %ONLY if ohm10=sweep_parameter(i);
-%fi= fi*pi/180;            %ONLY if fi=sweep_parameter(i);
+fi= fi*pi/180;            %ONLY if fi=sweep_parameter(i);
 %fi_obs= fi_obs*pi/180;    %ONLY if fi=sweep_parameter(i);
 
 
