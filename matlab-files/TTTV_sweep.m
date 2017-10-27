@@ -2,7 +2,7 @@
 %  * Copyright (c) 2017 Jose Atiemza Piedra - All rights reserved.
 %  * <www.joseatienza.com> <joseatienzapiedra@gmail.com>
 %  *
-%  * This file is part of TTTV TOOLS 
+%  * This file is part of TTTV TOOLS
 %  * And:  https://github.com/joseatienzapiedra/TTTV_Tools
 %  *
 %  * TTTV TOOLS is free software: you can redistribute it and/or modify
@@ -50,92 +50,93 @@ g2=0;
 J1=10;
 ohm10=0;
 fi_obs=pi/2;
+fi=pi/2;
 
 m0=1;
+%m1=0.0539515279241307; %Neptune
 m1=1;
 m2=0.0035;
 z= 10*pi/180;
 period= 400;
 
-fi=pi/2;
 
 t_min=1;
 t_max=200*period;
 NS_factor = 10;
 OC_precision = 10;
-m0=m0*1047.56; 
+m0=m0*1047.56;
 
-sweep_parameter(1)=0;       %Sweep Parameter min value
-sweep_step=5;              %Sweep Parameter step
-sweep_max=359;                  %Sweep Parameter max value
+sweep_parameter(1)=0.1;    %Sweep Parameter min value
+sweep_step=        0.05;    %Sweep Parameter step
+sweep_max=         1;    %Sweep Parameter max value
 
 %Sweep Parameter label
 
-%sweep_parameter_label='Trojan Mass [Jupiter masses]';   
-%sweep_parameter_label='Planet Mass [Jupiter masses]'; 
-%sweep_parameter_label='Star Mass [Sun masses]'; 
-%sweep_parameter_label='z [º]'; 
+sweep_parameter_label='Trojan Mass [Jupiter masses]';
+%sweep_parameter_label='Planet Mass [Jupiter masses]';
+%sweep_parameter_label='Star Mass [Sun masses]';
+%sweep_parameter_label='z [º]';
 %sweep_parameter_label='J1, Inclination [º]'; %?????
-%sweep_parameter_label='Orbital Period [Days]'; 
-%sweep_parameter_label='Ohm10 [º]'; 
-sweep_parameter_label='Fi [º]'; 
-%sweep_parameter_label='Fi_obs [º]'; 
-%sweep_parameter_label='a [AU]'; 
+%sweep_parameter_label='Orbital Period [Days]';
+%sweep_parameter_label='Ohm10 [º]';
+%sweep_parameter_label='Fi [º]';
+%sweep_parameter_label='Fi_obs [º]';
+%sweep_parameter_label='a [AU]';
 
 i=1;
 while sweep_parameter<sweep_max
-tic;
+    tic;
     if i>1
         sweep_parameter(i)=sweep_parameter(i-1)+sweep_step;
     end
-
-fi=sweep_parameter(i);     %IMPORTANT! Define Sweep Parameter!
-
-%t_max=period*200;        %ONLY if period=sweep_parameter(i);
-%m0=m0*1047.56;            %ONLY if m0=sweep_parameter(i);
-%J1= J1*pi/180;              %ONLY if J1=sweep_parameter(i);
-%z= z*pi/180;              %ONLY if z=sweep_parameter(i);
-%ohm10= ohm10*pi/180;      %ONLY if ohm10=sweep_parameter(i);
-fi= fi*pi/180;            %ONLY if fi=sweep_parameter(i);
-%fi_obs= fi_obs*pi/180;    %ONLY if fi=sweep_parameter(i);
-
-
-[OC, transit_time, transit_orbit, time, Y1, Z1, Y1p, Z1p]=TTTV_Solver(a,J1,fi ,fi_obs,lambda10,ohm10,g2,m0,m1,m2,z,period,t_min, t_max, NS_factor, OC_precision);
-[TTV_period(i,:), TTV_offset(i,:),TTV_amplitude(i,:),TTV_fase(i,:),TTV_fit, correl] = TTTV_real_fitting(transit_time, OC);
-correl_vector(i)=correl;
-
-[thd_db,~,harmfreq] = thd(OC,(1/period), length(TTV_offset(i,:)));
-percent_thd(i) = 100*(10^(thd_db/20));
-
-
-clf
-figure(1);
-plot(transit_orbit, OC)
-hold on;
-plot(transit_orbit, OC,'ro')
-plot(transit_orbit,sum(TTV_fit),'black');
-xlabel('Orbit number')
-ylabel('O-C [Minutes]')
-legend('O-C interpolation','O-C points',strcat('Fitting correlation: ',num2str(100*correl),'%'))
-pause(0.1);
-
-iteration_time(i)=toc;
-mean_iteration_time=mean(iteration_time);
-
-number_iterations=(1+(sweep_max-sweep_parameter(1))/sweep_step);
-estimated_time=mean_iteration_time*(number_iterations-i);
-
-
-clc;
-disp(strcat('Sweep Parameter: ',sweep_parameter_label))
-disp(strcat(num2str(100*i/number_iterations),'% Last Sweep Parameter value = ', num2str(sweep_parameter(i))))
-fprintf('Estimated Time Remaining: %d minutes %d seconds\n',fix(estimated_time/60),round(60*((estimated_time/60)-fix(estimated_time/60))));
-fprintf('Min correlation:  %.3f %%\n',100*min(correl_vector));
-fprintf('Mean correlation: %.3f %%\n',100*mean(correl_vector));
-fprintf('Max correlation:  %.3f %%\n',100*max(correl_vector));
-disp(' ')
-
-i=i+1;
+    
+    m2=sweep_parameter(i);     %IMPORTANT! Define Sweep Parameter!
+    
+    %t_max=period*200;        %ONLY if period=sweep_parameter(i);
+    %m0=m0*1047.56;            %ONLY if m0=sweep_parameter(i);
+    %J1= J1*pi/180;              %ONLY if J1=sweep_parameter(i);
+    %z= z*pi/180;              %ONLY if z=sweep_parameter(i);
+    %ohm10= ohm10*pi/180;      %ONLY if ohm10=sweep_parameter(i);
+    %fi= fi*pi/180;            %ONLY if fi=sweep_parameter(i);
+    %fi_obs= fi_obs*pi/180;    %ONLY if fi=sweep_parameter(i);
+    
+    
+    [OC, transit_time, transit_orbit, time, Y1, Z1, Y1p, Z1p]=TTTV_Solver(a,J1,fi ,fi_obs,lambda10,ohm10,g2,m0,m1,m2,z,period,t_min, t_max, NS_factor, OC_precision);
+    [TTV_period(i,:), TTV_offset(i,:),TTV_amplitude(i,:),TTV_fase(i,:),TTV_fit, correl] = TTTV_real_fitting(transit_time, OC);
+    correl_vector(i)=correl;
+    
+    [thd_db,~,harmfreq] = thd(OC,(1/period), length(TTV_offset(i,:)));
+    percent_thd(i) = 100*(10^(thd_db/20));
+    
+    
+    clf
+    figure(1);
+    plot(transit_orbit, OC)
+    hold on;
+    plot(transit_orbit, OC,'ro')
+    plot(transit_orbit,sum(TTV_fit),'black');
+    xlabel('Orbit number')
+    ylabel('O-C [Minutes]')
+    legend('O-C interpolation','O-C points',strcat('Fitting correlation: ',num2str(100*correl),'%'))
+    pause(0.1);
+    
+    iteration_time(i)=toc;
+    mean_iteration_time=mean(iteration_time);
+    
+    number_iterations=(1+(sweep_max-sweep_parameter(1))/sweep_step);
+    estimated_time=mean_iteration_time*(number_iterations-i);
+    
+    
+    clc;
+    disp(strcat('Sweep Parameter: ',sweep_parameter_label))
+    disp(strcat(num2str(100*i/number_iterations),'% Last Sweep Parameter value = ', num2str(sweep_parameter(i))))
+    fprintf('Estimated Time Remaining: %d minutes %d seconds\n',fix(estimated_time/60),round(60*((estimated_time/60)-fix(estimated_time/60))));
+    fprintf('Min correlation:  %.3f %%\n',100*min(correl_vector));
+    fprintf('Mean correlation: %.3f %%\n',100*mean(correl_vector));
+    fprintf('Max correlation:  %.3f %%\n',100*max(correl_vector));
+    disp(' ')
+    
+    i=i+1;
 end
 
 figure (1)
@@ -157,8 +158,8 @@ xlim(AX(2), [sweep_parameter(1) sweep_max])
 Ymin=min(TTV_period(:,1));
 Ymax=max(TTV_period(:,1));
 
- Ymin=Ymin-(Ymax-Ymin)*0.1;
- Ymax=Ymax+(Ymax-Ymin)*0.1;
+Ymin=Ymin-(Ymax-Ymin)*0.1;
+Ymax=Ymax+(Ymax-Ymin)*0.1;
 
 set(AX(1),'YLim',[Ymin Ymax])
 set(AX(2),'YLim',[Ymin/period Ymax/period])

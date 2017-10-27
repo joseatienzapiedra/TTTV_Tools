@@ -90,8 +90,7 @@ else
             TTV_amplitude=TTV_amplitude*0.999999;
             err(j)=err2;
         end
-        
-        if ((round(err(j)*10000)/10000) == (round(err(j-1)*10000)/10000) || err(j)<0.01) && abs(1-(TTV_amplitude/(max(OC)-(max(OC)+min(OC))*0.5))) <0.01
+        if ((round(err(j)*10000)/10000) == (round(err(j-1)*10000)/10000) || err(j)<0.01) %&& abs(1-(TTV_amplitude/(max(OC)-(max(OC)+min(OC))*0.5))) <0.01
             Aux_flag=0;
             
             TTV_fit=TTV_offset+TTV_amplitude*sin(TTV_fase+transit_time*2*pi/TTV_period);
