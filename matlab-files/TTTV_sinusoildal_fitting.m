@@ -1,4 +1,3 @@
-
 %  * Copyright (c) 2017 Jose Atiemza Piedra - All rights reserved.
 %  * <www.joseatienza.com> <joseatienzapiedra@gmail.com>
 %  *

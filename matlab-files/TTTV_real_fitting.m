@@ -1,8 +1,7 @@
-
 %  * Copyright (c) 2017 Jose Atiemza Piedra - All rights reserved.
 %  * <www.joseatienza.com> <joseatienzapiedra@gmail.com>
 %  *
-%  * This file is part of TTTV TOOLS 
+%  * This file is part of TTTV TOOLS
 %  * And:  https://github.com/joseatienzapiedra/TTTV_Tools
 %  *
 %  * TTTV TOOLS is free software: you can redistribute it and/or modify
