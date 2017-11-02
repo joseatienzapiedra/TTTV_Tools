@@ -43,21 +43,32 @@ fi_obs=pi/2;
 lambda10=-pi/2;
 ohm10=0;
 g2=0;
-m0=1.16;
-m1=2.45;
-m2=0.006575;
-z= 20*pi/180;
-period= 1.4857108;
+m0=1;
+m1=1;
+m2=0.003;
+z= 1*pi/180;
+period= 400;
 t_min=1;
 t_max=200*period;
 NS_factor = 10;
 OC_precision = 10;
+
+
+m0=1.21;
+m1=0.062638002218427;
+period= 17.83365704;
+z= 5*pi/180;  %%OFFSET
+m2=0.062638002218427/30;       %%AMPLITUD
+
+
+
 
 m0=m0*1047.56;
 
 
 [OC, transit_time, transit_orbit, time, Y1, Z1, Y1p, Z1p]=TTTV_Solver(a,J1,fi ,fi_obs,lambda10,ohm10,g2,m0,m1,m2,z,period,t_min, t_max, NS_factor, OC_precision);
 [TTV_period, TTV_offset,TTV_amplitude,TTV_fase,TTV_fit, correl] = TTTV_real_fitting(transit_time, OC);
+
 
 
 [thd_db,~,~] = thd(OC,(1/period), 2);
@@ -104,9 +115,16 @@ plot(w1,pxx1)
 xlabel('Frequency [Days^-^1]')
 ylabel('Power [Minutes]')
 
-clc
-disp('TTV AMPLITUDE:')
-disp(TTV_amplitude)
+figure(1)
+
+plot(transit_orbit, OC)
+hold on;
+plot(transit_orbit, OC,'ro')
+plot(transit_orbit,sum(TTV_fit),'black');
+xlabel('Orbit number')
+ylabel('O-C [Minutes]')
+legend('O-C interpolation','O-C points',strcat('Fitting correlation: ',num2str(100*round(correl)),'%'))
+
 
 
 

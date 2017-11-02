@@ -83,6 +83,7 @@ else
         TTV_fit=TTV_offset+TTV_amplitude*0.999999*sin(TTV_fase+transit_time*2*pi/TTV_period);
         err2=abs((max(OC)-(max(OC)+min(OC))*0.5)-(max(TTV_fit)-(max(TTV_fit)+min(TTV_fit))*0.5));
         
+        err(j)=1;
         if err2 >= err1
             TTV_amplitude=TTV_amplitude*1.000001;
             err(j)=err1;
@@ -90,6 +91,7 @@ else
             TTV_amplitude=TTV_amplitude*0.999999;
             err(j)=err2;
         end
+        
         if ((round(err(j)*10000)/10000) == (round(err(j-1)*10000)/10000) || err(j)<0.01) %&& abs(1-(TTV_amplitude/(max(OC)-(max(OC)+min(OC))*0.5))) <0.01
             Aux_flag=0;
             
